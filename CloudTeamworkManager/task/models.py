@@ -28,11 +28,11 @@ class task(models.Model):
             ('glance_over_task_details', '浏览任务详情'),  # 面向实例
             ('edit_task_comments', '编辑任务评价'), # 面向实例
             ('edit_task_progress', '编辑任务进度'),  # 面向实例
-            ('edit_task_shedule', '编辑任务时间表'),  # 面向实例
+            ('edit_task_schedule', '编辑任务时间表'),  # 面向实例
             ('view_personal_comments','查看个人评价'),  # 面向实例
             ('edit_personal_comments','编辑个人评价'),  # 面向实例
             ('view_personal_progress', '查看个人进度'),  # 面向实例
-            ('view_personal_shedule', '查看个人时间表'),  # 面向实例
+            ('view_personal_schedule', '查看个人时间表'),  # 面向实例
             ('edit_appendix', '编辑附件'),  # 面向实例
             ('delete_appendix', '删除附件'),  # 面向实例
         }

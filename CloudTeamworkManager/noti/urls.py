@@ -1,12 +1,15 @@
 from django.urls import path
-from .views import NotiView
+from . import views
 
 
 urlpatterns = [
-    path('my_notifications/', NotiView.as_view(), name='my_notifications'),
-    path('delete_my_read_notifications/', NotiView.delete_my_read_notifications, name='delete_my_read_notifications'),
-    path('send_notification/', NotiView.send_notification, name="send_notification"),
-    path('get_user_notification/', NotiView.get_user_notification, name="get_user_notification"),
-    path('my_notifications/', NotiView.my_notifications, name="my_notifications")
+    path('delete_all_read/', views.delete_all_read),
+    path('delete_target/<int:notification_id>', views.delete_target),
+    path('get_read/', views.get_read),
+    path('get_unread/', views.get_unread),
+    path('mark_all_as_read/', views.mark_all_as_read),
+    path('mark_target_as_read/<int:notification_id>/', views.mark_target_as_read),
+    path('send_test/<int:type>', views.send_test),
+    path('',views.notifications),
+    path('get_target_type/<int:type>/', views.get_target_type),
 ]
-

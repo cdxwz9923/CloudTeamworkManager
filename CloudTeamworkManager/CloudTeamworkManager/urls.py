@@ -19,6 +19,7 @@ Including another URLconf
 # Uncomment next two lines to enable admin:
 from django.contrib import admin
 from django.urls import path, include
+import notifications.urls
 import xadmin
 
 urlpatterns = [

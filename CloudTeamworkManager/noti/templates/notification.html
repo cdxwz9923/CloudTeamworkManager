@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
+    <link href="/static/css/animation/component.css" rel="stylesheet">
+    <title>当前消息</title>
+    <style>
+        li {
+            line-height: 3rem;
+            vertical-align: middle;
+        }
+
+        .card {
+            margin: 1.2rem 0rem;
+            border-radius: 0px;
+            border-bottom: 0px;
+            border-right: 0px;
+            border-left: 0px;
+        }
+    </style>
+</head>
+
+<body style="background-color: #F7F8FA;">
+    <div class="container" style="height: 100%">
+        <div class="row no-gutter">
+            <div class="col-10 offset-1">
+                <div class="card" style="border-top: 0.25rem solid #448AFF" id="mainFunc">
+                    <div class="clearfix" style="width: 100%">
+                        <div style="float: right; height: 6rem; width: 22rem">
+                            <div class="text-uppercase lead font-weight-bold"
+                                style="font-size: 4rem; color: rgba(41, 98, 255, 0.05); z-index: -1">
+                                messages</div>
+                            <div
+                                style="font-size: 2rem; color: #999999; position: relative; top: -65%; left: 8%; z-index: 1;">
+                                你的消息
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <ul class="nav nav-pills mb-3 col-10 offset-1" id="pills-tab" role="tablist">
+                            <li class="nav-item col-3">
+                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
+                                    role="tab" aria-controls="pills-home" aria-selected="true"
+                                    style="text-align: center">全部</a>
+                            </li>
+                            <li class="nav-item col-3">
+                                <a class="nav-link " id="pills-system-tab" data-toggle="pill" href="#pills-system"
+                                    role="tab" aria-controls="pills-system" aria-selected="false"
+                                    style="text-align: center">系统消息</a>
+                            </li>
+                            <li class="nav-item col-3">
+                                <a class="nav-link" id="pills-group-tab" data-toggle="pill" href="#pills-group"
+                                    role="tab" aria-controls="pills-group" aria-selected="false"
+                                    style="text-align: center">组内消息</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="tab-content col-10 offset-1" id="pills-tabContent" style="padding-bottom: .75rem">
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                aria-labelledby="pills-home-tab">
+                                <div class="unread_notific">
+                                    <div v-for="(each, index) in unread" class="row no-gutters md-trigger"
+                                        style="height: 5rem; cursor: pointer;; cursor: pointer;" data-modal="modal-8"
+                                        @click="show_detail(each.verb, each.description, each.timestamp, each.id, index)">
+                                        <div class="col-2" style="text-align: center">
+                                            <img :src="JSON.parse(each.data).type == 1? sys_logo : team_logo"
+                                                style="border-radius: 100%; height: 4rem; width: auto; position: relative; top: 50%; transform: translateY(-50%)">
+                                        </div>
+                                        <div class="col-10">
+                                            <span style="position: relative; top: 1.1rem">
+                                                <span style="padding: 0">[[each.verb]]
+                                                    <span class="badge badge-pill badge-primary">New</span>
+                                                </span>
+                                                <br>
+                                                <small>[[each.description]]</small>
+                                            </span>
+                                            <div style="float: right; margin-right: 8.33%">
+                                                <span>[[each.timestamp]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr v-if="read.length && unread.length" style="background-color: #007bff">
+                                <div class="read_notific">
+                                    <div v-for="each in read" class="row no-gutters md-trigger"
+                                        style="height: 5rem; cursor: pointer;" data-modal="modal-8"
+                                        @click="show_detail(each.verb, each.description, each.timestamp, each.id, -1)">
+                                        <div class="col-2" style="text-align: center">
+                                            <img :src="JSON.parse(each.data).type == 1? sys_logo : team_logo"
+                                                style="border-radius: 100%; height: 4rem; width: auto; position: relative; top: 50%; transform: translateY(-50%)">
+                                        </div>
+                                        <div class="col-10">
+                                            <span style="position: relative; top: 1.1rem">
+                                                <span style="padding: 0">[[each.verb]]</span>
+                                                <br>
+                                                <small>[[each.description]]</small>
+                                            </span>
+                                            <div style="float: right; margin-right: 8.33%">
+                                                <span>[[each.timestamp]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-system" role="tabpanel"
+                                aria-labelledby="pills-profile-tab">
+                                <div class="unread_notific">
+                                    <div v-for="(each, index) in unread" v-if="JSON.parse(each.data).type == 1" class="row no-gutters md-trigger" style="height: 5rem; cursor: pointer;"
+                                        data-modal="modal-8" @click="show_detail(each.verb, each.description, each.timestamp, each.id, index)">
+                                        <div class="col-2" style="text-align: center">
+                                            <img :src="sys_logo"
+                                                style="border-radius: 100%; height: 4rem; width: auto; position: relative; top: 50%; transform: translateY(-50%)">
+                                        </div>
+                                        <div class="col-10">
+                                            <span style="position: relative; top: 1.1rem">
+                                                <span style="padding: 0">[[each.verb]]
+                                                    <span class="badge badge-pill badge-primary">New</span>
+                                                </span>
+                                                <br>
+                                                <small>[[each.description]]</small>
+                                            </span>
+                                            <div style="float: right; margin-right: 8.33%">
+                                                <span>[[each.timestamp]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr v-if="sys_read.length && sys_unread.length" style="background-color: #007bff">
+                                <div class="read_notific">
+                                    <div v-for="each in read" v-if="JSON.parse(each.data).type == 1" class="row no-gutters md-trigger" style="height: 5rem; cursor: pointer;"
+                                        data-modal="modal-8" @click="show_detail(each.verb, each.description, each.timestamp, each.id, -1)">
+                                        <div class="col-2" style="text-align: center">
+                                            <img :src="sys_logo"
+                                                style="border-radius: 100%; height: 4rem; width: auto; position: relative; top: 50%; transform: translateY(-50%)">
+                                        </div>
+                                        <div class="col-10">
+                                            <span style="position: relative; top: 1.1rem">
+                                                <span style="padding: 0">[[each.verb]]
+                                                </span>
+                                                <br>
+                                                <small>[[each.description]]</small>
+                                            </span>
+                                            <div style="float: right; margin-right: 8.33%">
+                                                <span>[[each.timestamp]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-group" role="tabpanel"
+                                aria-labelledby="pills-contact-tab">
+                                <div class="unread_notific">
+                                    <div v-for="(each, index) in unread" v-if="JSON.parse(each.data).type == 2" class="row no-gutters md-trigger" style="height: 5rem; cursor: pointer;"
+                                        data-modal="modal-8" @click="show_detail(each.verb, each.description, each.timestamp, each.id, index)">
+                                        <div class="col-2" style="text-align: center">
+                                            <img :src="team_logo"
+                                                style="border-radius: 100%; height: 4rem; width: auto; position: relative; top: 50%; transform: translateY(-50%)">
+                                        </div>
+                                        <div class="col-10">
+                                            <span style="position: relative; top: 1.1rem">
+                                                <span style="padding: 0">[[each.verb]]
+                                                    <span class="badge badge-pill badge-primary">New</span>
+                                                </span>
+                                                <br>
+                                                <small>[[each.description]]</small>
+                                            </span>
+                                            <div style="float: right; margin-right: 8.33%">
+                                                <span>[[each.timestamp]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr v-if="team_read.length && team_unread.length" style="background-color: #007bff" />
+                                <div class="read_notific">
+                                    <div v-for="each in read" v-if="JSON.parse(each.data).type == 2" class="row no-gutters md-trigger" style="height: 5rem; cursor: pointer;"
+                                        data-modal="modal-8" @click="show_detail(each.verb, each.description, each.timestamp, each.id)">
+                                        <div class="col-2" style="text-align: center">
+                                            <img :src="team_logo"
+                                                style="border-radius: 100%; height: 4rem; width: auto; position: relative; top: 50%; transform: translateY(-50%)">
+                                        </div>
+                                        <div class="col-10">
+                                            <span style="position: relative; top: 1.1rem">
+                                                <span style="padding: 0">[[each.verb]]</span>
+                                                <br>
+                                                <small>[[each.description]]</small>
+                                            </span>
+                                            <div style="float: right; margin-right: 8.33%">
+                                                <span>[[each.timestamp]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="md-modal md-effect-8" id="modal-8">
+                                <div class="md-content">
+                                    <div>
+                                        <div class="container-fluid">
+                                            <div class="row justify-content-between">
+                                                <div class="col-4" style="margin-top: 10px; font-size: 24px">
+                                                    消息详情
+                                                </div>
+                                                <div class="col-2" style="margin-top: 10px;">
+                                                    <button class="md-close btn-sm btn-primary"
+                                                        style="background-color: transparent; border: none; height: 100%">
+                                                        <img src="/static/pic/close.png">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="lead">[[detail_title]]</div>
+                                                    <div class="text-left">
+                                                        [[detail_body]]
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <small>[[detail_date]]</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="md-overlay"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/bootstrap/jquery.min.js"></script>
+    <script src="/static/js/bootstrap/popper.min.js"></script>
+    <script src="/static/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/vue/vue.js"></script>
+    <script src="/static/js/vue/vue-resource.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#mainFunc",
+            delimiters: ['[[', ']]'],
+            data: {
+                unread: {{ unread|safe }},
+                read: {{ read|safe }},
+                detail_title: "",
+                detail_body: "",
+                detail_date: "",
+                team_unread: 0,
+                team_read: 0,
+                sys_unread: 0,
+                sys_read: 0,
+                sys_logo: "/static/pic/系统消息logo.png",
+                team_logo: "/static/pic/组内消息logo.png"
+            },
+            methods: {
+                show_detail: function (title, body, date, id, index = -1) {
+                    this.detail_title = title;
+                    this.detail_body = body;
+                    this.detail_date = date;
+                    this.$http.get('mark_target_as_read/' + id)
+                    document.getElementById("modal-8").classList.add("md-show");
+
+                    if (index != -1){
+                        this.read.unshift(this.unread.splice(index, 1)[0]);
+                    }
+                },
+            }
+        })
+    </script>
+    <script src="/static/js/animation/classie.js"></script>
+    <script src="/static/js/animation/modalEffects.js"></script>
+</body>
+
+</html>

@@ -18,7 +18,7 @@ class personal_progressAdmin(object):
 # xadmin.site.register(personal_comment,personal_commentAdmin)
 
 
-class personal_schedule(models.Model):
+class personal_scheduleAdmin(models.Model):
     list_display = ['detail','id']
     list_filter = ['detail','id']
     search_fields = ['detail','id']

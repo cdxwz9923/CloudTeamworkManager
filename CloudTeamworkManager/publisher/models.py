@@ -23,14 +23,14 @@ class personal_progress(models.Model):
         verbose_name = u'个人进度'
         verbose_name_plural = verbose_name
 
-class personal_shedule(models.Model):
+class personal_schedule(models.Model):
     detail = models.TextField(verbose_name = '个人时间表内容', default = "[]")
     id = models.CharField(max_length = 15, primary_key = True)
 
     class Meta:
         permissions = {
-            #('view_personal_shedule', '查看个人时间表'), 
-            ('edit_personal_shedule', '编辑个人时间表'), 
+            #('view_personal_schedule', '查看个人时间表'), 
+            ('edit_personal_schedule', '编辑个人时间表'), 
         }
         verbose_name = u'个人时间表'
         verbose_name_plural = verbose_name

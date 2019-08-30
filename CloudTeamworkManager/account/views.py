@@ -6,7 +6,8 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
-from .forms import RegisterForm, LoginForm, ResetPasswordForm, change_info, extend_info, SetPasswordForm, my_clean_phone_number
+from .forms import RegisterForm, LoginForm, ResetPasswordForm, extend_info, SetPasswordForm, my_clean_phone_number
+from .forms import change_info as change_info_form
 from .models import UserProfile
 from .msgcode import sendcode
 from task.models import task
@@ -47,7 +48,6 @@ def register_page(request):
 
     if request.method == "POST":
         forms = RegisterForm(request.POST)
-        forms.answer = request.session.get("verify")
 
         if forms.is_valid():
             try:
@@ -76,15 +76,17 @@ def reset_password_page(request):
 @login_required
 def set_password(request):
     if request.method == "GET":
-        return render(request, 'resetPassword.html')
+        return render(request, 'setPassword.html')
 
     if request.method == "POST":
-        forms = SetPasswordForm()
-        user = request.user
-        forms.user = user
+        forms = SetPasswordForm(request.POST)
+        user = request.user  # 不用动这里
+        forms.user = request.user  # 不用动这里
+        forms.answer = request.session.get('verify').upper()
 
         if forms.is_valid():
             user.set_password(forms.cleaned_data["new_password"])
+            auth.logout(request)
             return JsonResponse({"url": "/account/login", "status": 302}, safe=False)
         return JsonResponse({"tip": list(forms.errors.values())[0][0], "status": 400}, safe=False)
 
@@ -114,9 +116,10 @@ def sendmsgcode(request):
 
 @login_required
 def space_page(request):
-    user_info = UserProfile.objects.get(user_id = request.user.id)
+    target_userprofile = UserProfile.objects.get(user_id = request.user.id)
+    target_user = request.user
 
-    return render(request, 'space.html')
+    return render(request, 'space.html', {"name": target_userprofile.name, "phone_number": target_user.username, "gender": target_userprofile.sex, "student_id": target_userprofile.student_id, "birthday": target_userprofile.birthday, "email": target_userprofile.email, "major": target_userprofile.major, "grade": target_userprofile.grade, "room": target_userprofile.room, "home_address": target_userprofile.home_address, "guardian_phone": target_userprofile.guardian_phone, "introduction": target_userprofile.introduction, "user_id": target_user.id, "sex": target_userprofile.sex, "birthday": target_userprofile.birthday, "edit_status": "false", "edit_or_save": "编辑"})
 
 def home(request):
     if request.user.is_authenticated:
@@ -144,11 +147,11 @@ def personal_page(request):
 @login_required
 def perfect_info(request):
     if request.method == "GET":
-        return render(request, "space.html", {"model": "perfect_info"})
+        return render(request, "perfect_info.html")
 
     if request.method == "POST":
         user_info = UserProfile.objects.get(user_id = request.user.id)
-        if user_info.name:
+        if not user_info.name:
             forms = extend_info(request.POST, instance=user_info)
 
             if forms.is_valid():
@@ -160,11 +163,11 @@ def perfect_info(request):
 @login_required
 def change_info(request):
     if request.method == "GET":
-        return render(request, "space.html", {"model": "change_info"})
+        return render(request, "space.html", {"edit_status": "true", "edit_or_save": "保存"})
 
     if request.method == "POST":
         user_info = UserProfile.objects.get(user_id = request.user.id)
-        forms = change_info(request.POST, instance=user_info)
+        forms = change_info_form(request.POST, instance=user_info)
 
         if forms.is_valid():
             forms.save()
@@ -174,6 +177,9 @@ def change_info(request):
 @login_required
 def task_list(request):
     user = UserProfile.objects.get(user_id = request.user.id)
-    task_list = json.loads(user.involved_projects)
-    
-    return json.dumps([task.objects.get(id = each).values(["id", "task_name", "members", "task_status"]) for each in task_list])
+    _task_list = json.loads(user.involved_projects)
+    temp = [task.objects.filter(id = each).values("id", "task_name", "members", "task_status")[0] for each in _task_list]
+    for each_task in temp:
+        members = json.loads(each_task["members"])
+        each_task["members"] = [UserProfile.objects.get(user_id = each).name for each in members]
+    return render(request, "task_list.html", {"content": temp, "name": user.name})

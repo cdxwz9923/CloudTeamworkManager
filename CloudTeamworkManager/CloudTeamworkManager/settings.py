@@ -25,7 +25,7 @@ SECRET_KEY = '42d4f7e0-b8f4-4c47-8dd1-1304b89a4190'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'noti',
+    'notifications'
 ]
 
 # Middleware framework
@@ -103,8 +104,7 @@ DATABASES = {
 #     }
 # }
 
-
-
+DJANGO_NOTIFICATIONS_CONFIG = {'USE_JSONFIELD': True}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

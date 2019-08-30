@@ -15,6 +15,13 @@ def my_clean_phone_number(phone_number):
             return phone_number
     raise ValidationError("手机号码不正确", code=402)
 
+def my_clean_picode(picode, answer):
+    if re.match("\\w{4}", picode):
+        if picode.upper() == answer.upper():
+            return picode
+        raise ValidationError("验证码校验失败")
+    raise ValidationError("验证码格式错误")
+
 class RegisterForm(forms.Form):
     phone_number = forms.CharField(max_length=11, min_length=11, label="手机号")
     password = forms.CharField(max_length=16, min_length=6, label="密码")
@@ -22,14 +29,12 @@ class RegisterForm(forms.Form):
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data["phone_number"]
-
         return my_clean_phone_number(phone_number)
 
     def clean_msgcode(self):
         msgcode = self.cleaned_data["msgcode"]
 
         if re.match("\d{4}", msgcode):
-
             if verifycode(self.cleaned_data.get("phone_number"), msgcode):
                 return msgcode
             raise ValidationError("验证码校验失败")
@@ -41,11 +46,12 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=16, min_length=6, label="密码")
 
 class SetPasswordForm(forms.Form):
+    picode = forms.CharField(max_length=4, min_length=4, label="图形验证码")
     phone_number = forms.CharField(max_length=11, min_length=11, label="手机号")
     old_password = forms.CharField(max_length=16, min_length=6, label="当前密码")
     new_password = forms.CharField(max_length=16, min_length=6, label="新密码")
-    picode = forms.CharField(max_length=4, min_length=4, label="图形验证码")
     user = None
+    answer = None
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get("phone_number")
@@ -60,13 +66,12 @@ class SetPasswordForm(forms.Form):
 
     def clean_picode(self):
         picode = self.cleaned_data["picode"]
-
         return my_clean_picode(picode, self.answer)
 
     def clean_old_password(self):
         old_password = self.cleaned_data["old_password"]
 
-        if user.check_password(old_password):
+        if self.user.check_password(old_password):
             return old_password
         raise ValidationError("当前密码不正确")
 
@@ -117,7 +122,7 @@ class extend_info(ModelForm):
     def clean_room(self):
         room = self.cleaned_data.get("room")
 
-        if re.match("\d{4,8}", room):
+        if re.match("\d{1,2}#\d{3}", room):
             return room
         raise ValidationError("宿舍号不正确")
 
@@ -136,13 +141,13 @@ class extend_info(ModelForm):
         raise ValidationError("学号不正确")
 
     def clean_grade(self):
-        grade = self.cleaned_data.get("grade")
+        grade = self.cleaned_data.get("student_id")[:4]
 
         if re.match("\d{4}", grade):
             return grade
-        raise ValidationError("年级不正确")
+        raise ValidationError("学号不正确")
 
 class change_info(extend_info):
     class Meta:
         model = UserProfile
-        exclude = ("involved_projects_number", "managed_projects_number", "name", "student_id", "cloud_id", "major", "grade", "sex", "managed_projects", "unread_notifications", "read_notifications", "involved_projects", "user")
+        exclude = ("involved_projects_number", "managed_projects_number", "name", "student_id", "cloud_id", "major", "birthday", "grade", "sex", "managed_projects", "unread_notifications", "read_notifications", "involved_projects", "user")
