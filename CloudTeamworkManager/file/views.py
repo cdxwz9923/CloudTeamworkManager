@@ -153,6 +153,6 @@ def table(request, task_id):
     files_id = task.objects.get(id=task_id).appendixes
     files_id = json.loads(files_id)
     for file_id in files_id:
-        file_name = _appendix.objects.filter(id = file_id).values("id", "name", "size")[0]
+        file_name = _appendix.objects.filter(id = file_id).values("id", "name", "size", "publisher")[0]
         filesname.append(file_name)
     return JsonResponse(filesname, safe=False)

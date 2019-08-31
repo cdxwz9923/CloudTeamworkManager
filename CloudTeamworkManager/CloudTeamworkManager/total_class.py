@@ -487,6 +487,8 @@ class task(object):
 
         target_task["members"] = json.dumps([{**{"id": each}, **model_to_dict(UserProfile.objects.get(user_id = each), fields=['name', 'major'])} for each in members])
         target_task["leaders"] = json.dumps([{**{"id": each}, **model_to_dict(UserProfile.objects.get(user_id = each), fields=['name', 'major'])} for each in leaders])
+        target_task["user_id"] = request.user.id
+        target_task["task"] = self.task
 
         return render(request, "task_detail.html", target_task)
 
