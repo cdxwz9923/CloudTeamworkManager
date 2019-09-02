@@ -8,12 +8,12 @@
     <link href="/static/css/animation/component.css" rel="stylesheet">
     <title>任务详情</title>
     <style>
-        @font-face{
+        @font-face {
             font-family: 'SourceHanSansCN-Normal';
             src: url('/static/font/SourceHanSansCN-Normal.otf');
         }
 
-        body{
+        body {
             font-family: 'SourceHanSansCN-Normal';
         }
 
@@ -22,7 +22,7 @@
             vertical-align: middle;
         }
 
-        hr{
+        hr {
             margin: 9px;
         }
 
@@ -35,8 +35,9 @@
         }
 
         .table th {
-            width: 6em;
+            width: 7em;
             font-weight: initial;
+            letter-spacing: 4px;
         }
 
         .card {
@@ -111,7 +112,7 @@
                                     the&nbsp;task
                                 </div>
                                 <div
-                                    style="font-size: 30px; color: #999999; position: relative; top: -65%; left: 8%; z-index: 1;">
+                                    style="letter-spacing: 4px; font-size: 30px; color: #999999; position: relative; top: -65%; left: 8%; z-index: 1;">
                                     基本资料
                                 </div>
                             </div>
@@ -149,7 +150,7 @@
                                             <div style="max-height: 200px; overflow-y: auto">
                                                 <div v-if="!task_comment.length" style="position: absolute;">暂无内容</div>
                                                 <div v-for="(item,i) in task_comment" :key="item.id">
-                                                    <div style="font-size: 16px">
+                                                    <div style="font-size: 14px">
                                                         [[item.publish_date |
                                                         formatDate]]</div>
                                                     <textarea rows="1" placeholder="请输入内容" :key="item.publish_date"
@@ -161,10 +162,13 @@
                                             </div>
                                             {% if "edit_task_comments" in flatpage_perms %}
                                             <input type="button" :value="isActive? '保存' : '添加'"
-                                                class="btn btn-outline-primary" style="float:right; margin-left: 1.5rem; margin-top: .5rem" :style="{visibility: add_button? 'visible' : 'hidden'}"
+                                                class="btn btn-outline-primary"
+                                                style="float:right; margin-left: 1.5rem; margin-top: .5rem"
+                                                :style="{visibility: add_button? 'visible' : 'hidden'}"
                                                 @click="add_task_comment()">
                                             <input type="button" :value="isActive? '保存' : '编辑'"
-                                                class="btn btn-outline-primary" style="float:right; margin-top: .5rem" :style="{visibility: edit_button && task_comment.length? 'visible' : 'hidden'}"
+                                                class="btn btn-outline-primary" style="float:right; margin-top: .5rem"
+                                                :style="{visibility: edit_button && task_comment.length? 'visible' : 'hidden'}"
                                                 @click="edit_task_comment()">
                                             {% endif %}
                                         </td>
@@ -181,7 +185,7 @@
                                     THE&nbsp;TASK
                                 </div>
                                 <div
-                                    style="font-size: 30px; color: #999999; position: relative; top: -65%; left: 8%; z-index: 1;">
+                                    style="letter-spacing: 4px; font-size: 30px; color: #999999; position: relative; top: -65%; left: 8%; z-index: 1;">
                                     任务进度
                                 </div>
                             </div>
@@ -214,7 +218,7 @@
                                             <div v-if="!task_schedule.length" style="position: absolute;">暂无内容</div>
                                             <div style="max-height: 200px; overflow-y: auto">
                                                 <div v-for="(item,i) in task_schedule" :key="item.id">
-                                                    <div style="font-size: 16px">[[item.publish_date |
+                                                    <div style="font-size: 14px">[[item.publish_date |
                                                         formatDate]]</div>
                                                     <textarea rows="1" placeholder="请输入内容" :key="item.publish_date"
                                                         :readonly="i == 0? (isActive? false : 'readonly' ) : true"
@@ -225,10 +229,13 @@
                                             </div>
                                             {% if "edit_task_schedule" in flatpage_perms %}
                                             <input type="button" :value="isActive? '保存' : '添加'"
-                                                class="btn btn-outline-primary" style="float:right; margin-left: 1.5rem; margin-top: .5rem" :style="{visibility: add_button? 'visible' : 'hidden'}"
+                                                class="btn btn-outline-primary"
+                                                style="float:right; margin-left: 1.5rem; margin-top: .5rem"
+                                                :style="{visibility: add_button? 'visible' : 'hidden'}"
                                                 @click="add_task_schedule()">
-                                            <input type="button"
-                                                :value="isActive? '保存' : '编辑'" class="btn btn-outline-primary" style="float:right; margin-top: .5rem" :style="{visibility: edit_button && task_schedule.length? 'visible' : 'hidden'}"
+                                            <input type="button" :value="isActive? '保存' : '编辑'"
+                                                class="btn btn-outline-primary" style="float:right; margin-top: .5rem"
+                                                :style="{visibility: edit_button && task_schedule.length? 'visible' : 'hidden'}"
                                                 @click="edit_task_schedule()">
                                             {% endif %}
                                         </td>
@@ -239,7 +246,7 @@
                                             <div v-if="!task_progress.length" style="position: absolute;">暂无内容</div>
                                             <div style="max-height: 200px; overflow-y: auto">
                                                 <div v-for="(item,i) in task_progress" :key="item.id">
-                                                    <div style="font-size: 16px">[[item.publish_date |
+                                                    <div style="font-size: 14px">[[item.publish_date |
                                                         formatDate]]</div>
                                                     <textarea rows="1" placeholder="请输入内容" :key="item.publish_date"
                                                         :readonly="i == 0? (isActive? false : 'readonly' ) : true"
@@ -250,10 +257,13 @@
                                             </div>
                                             {% if "edit_task_schedule" in flatpage_perms %}
                                             <input type="button" :value="isActive? '保存' : '添加'"
-                                                class="btn btn-outline-primary" style="float:right; margin-left: 1.5rem; margin-top: .5rem" :style="{visibility: add_button? 'visible' : 'hidden'}"
+                                                class="btn btn-outline-primary"
+                                                style="float:right; margin-left: 1.5rem; margin-top: .5rem"
+                                                :style="{visibility: add_button? 'visible' : 'hidden'}"
                                                 @click="add_task_process()">
-                                            <input type="button"
-                                                :value="isActive? '保存' : '编辑'" class="btn btn-outline-primary" style="float:right; margin-top: .5rem" :style="{visibility: edit_button && task_progress.length? 'visible' : 'hidden'}"
+                                            <input type="button" :value="isActive? '保存' : '编辑'"
+                                                class="btn btn-outline-primary" style="float:right; margin-top: .5rem"
+                                                :style="{visibility: edit_button && task_progress.length? 'visible' : 'hidden'}"
                                                 @click="edit_task_process()">
                                             {% endif %}
                                         </td>
@@ -270,151 +280,181 @@
                                     members
                                 </div>
                                 <div
-                                    style="font-size: 30px; color: #999999; position: relative; top: -65%; left: 8%; z-index: 1;">
+                                    style="letter-spacing: 4px; font-size: 30px; color: #999999; position: relative; top: -65%; left: 8%; z-index: 1;">
                                     人员安排
                                 </div>
                             </div>
                         </div>
                         <div class="row no-gutters">
-                            <div class="col-10 offset-1" style="margin-top: .75rem; margin-bottom: .75rem">
-                                <div style="font-size: 22px; color: #333333;">
-                                    项目组组长
-                                </div>
-                            </div>
-                            <div class="col-10 offset-1" style="margin-top: .75rem; margin-bottom: .75rem">
-                                <div class="row justify-content-start col-10" style="left: 4.16%">
-                                    <div v-for='person in leaders'
-                                        :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"
-                                        data-modal="modal-5" @click="show_deatils(person.id)"
-                                        style="margin-right: 2rem; width: 85px"
-                                        :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
-                                        <img :src="'/file/avatar/?user_id=' + person.id"
-                                            style="height: 30px; border-radius: 15px">
-                                        <div style="font-size: 14px; display: inline-block;">
-                                            [[person.name]]
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <table class="table col-10 offset-1 " style="margin-bottom: 1.5rem; width: 100%">
+                                <tbody>
+                                    <tr>
+                                        <th colspan="3">小组组长</th>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td>
+                                            <div v-for='person in leaders'
+                                                :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"
+                                                data-modal="modal-5" @click="show_deatils(person.id)"
+                                                style="margin-right: 2rem; width: 85px; display: inline-block"
+                                                :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
+                                                <img :src="'/file/avatar/?user_id=' + person.id"
+                                                    style="height: 30px; border-radius: 15px">
+                                                <div style="font-size: 14px; display: inline-block;">
+                                                    [[person.name]]
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="row no-gutters" style="margin-top: .75rem">
-                            <div class="col-10 offset-1" style="margin-top: .75rem; margin-bottom: .75rem">
-                                <div style="font-size: 22px; color: #333333;">
-                                    项目组成员
-                                </div>
-                            </div>
-                            <div class="col-10 offset-1" style="margin-bottom: .75rem">
-                                <div v-if='pythonList.length !== 0' style="margin-top: .75rem; margin-bottom: .75rem">
-                                    <div
-                                        style="font-size: 18px; margin-bottom: .75rem; left: 2.08%; position: relative; color: #666666">
-                                        Python:
-                                    </div>
-                                    <div class="row justify-content-start col-10" style="left: 4.16%;">
-                                        <div v-for='person in pythonList'
-                                            :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"  data-modal="modal-5"
-                                            @click="show_deatils(person.id)"
-                                            style="margin: .75rem 2rem .75rem 0rem; margin-right: 1.5rem; width: 85px"
-                                            :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
-                                            <img :src="'/file/avatar/?user_id=' + person.id"
-                                                style="height: 30px; border-radius: 15px">
-                                            <div style="font-size: 14px; display: inline-block;">
-                                                [[person.name]]
+                        <div class="row no-gutters">
+                            <table class="table col-10 offset-1 " style="margin-bottom: 3rem; max-width: 100%">
+                                <tbody>
+                                    <tr>
+                                        <th colspan="3">小组成员</th>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr v-if='pythonList.length !== 0'>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <th colspan="2" style="font-size: 16px">Python</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr v-if='pythonList.length !== 0'>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td>
+                                            <div v-for='person in leaders'
+                                                :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"
+                                                data-modal="modal-5" @click="show_deatils(person.id)"
+                                                style="margin: .75rem 2rem .75rem 0rem; margin-right: 1.5rem; width: 85px; display: inline-block"
+                                                :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
+                                                <img :src="'/file/avatar/?user_id=' + person.id"
+                                                    style="height: 30px; border-radius: 15px">
+                                                <div style="font-size: 14px; display: inline-block;">
+                                                    [[person.name]]
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div v-if='javaList.length !== 0' style="margin-top: .75rem; margin-bottom: .75rem">
-                                    <div
-                                        style="font-size: 18px; margin-bottom: .75rem; left: 2.08%; position: relative; color: #666666">
-                                        Java:
-                                    </div>
-                                    <div class="row justify-content-start col-10" style="left: 4.16%;">
-                                        <div v-for='person in javaList' :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"
-                                            data-modal="modal-5" @click="show_deatils(person.id)"
-                                            style="margin: .75rem 2rem .75rem 0rem; margin-right: 1.5rem; width: 85px"
-                                            :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
-                                            <img :src="'/file/avatar/?user_id=' + person.id"
-                                                style="height: 30px; border-radius: 15px">
-                                            <div style="font-size: 14px; display: inline-block;">
-                                                [[person.name]]
+                                        </td>
+                                    </tr>
+                                    <tr v-if='javaList.length !== 0'>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <th colspan="2" style="font-size: 16px">Java</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr v-if='javaList.length !== 0'>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td>
+                                            <div v-for='person in javaList'
+                                                :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"
+                                                data-modal="modal-5" @click="show_deatils(person.id)"
+                                                style="margin: .75rem 2rem .75rem 0rem; margin-right: 1.5rem; width: 85px; display: inline-block"
+                                                :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
+                                                <img :src="'/file/avatar/?user_id=' + person.id"
+                                                    style="height: 30px; border-radius: 15px">
+                                                <div style="font-size: 14px; display: inline-block;">
+                                                    [[person.name]]
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div v-if='jsList.length !== 0' style="margin-bottom: .75rem">
-                                    <div
-                                        style="font-size: 18px; margin-bottom: .75rem; left: 2.08%; position: relative; color: #666666">
-                                        JS:
-                                    </div>
-                                    <div class="row justify-content-start col-10" style="left: 4.16%;">
-                                        <div v-for='person in jsList' :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"
-                                            data-modal="modal-5" @click="show_deatils(person.id)"
-                                            style="margin: .75rem 2rem .75rem 0rem; margin-right: 1.5rem; width: 85px"
-                                            :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
-                                            <img :src="'/file/avatar/?user_id=' + person.id"
-                                                style="height: 30px; border-radius: 15px">
-                                            <div style="font-size: 14px; display: inline-block;">
-                                                [[person.name]]
+                                        </td>
+                                    </tr>
+                                    <tr v-if='jsList.length !== 0'>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <th colspan="2" style="font-size: 16px">JS</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr v-if='jsList.length !== 0'>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td>
+                                            <div v-for='person in jsList'
+                                                :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"
+                                                data-modal="modal-5" @click="show_deatils(person.id)"
+                                                style="margin: .75rem 2rem .75rem 0rem; margin-right: 1.5rem; width: 85px; display: inline-block"
+                                                :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
+                                                <img :src="'/file/avatar/?user_id=' + person.id"
+                                                    style="height: 30px; border-radius: 15px">
+                                                <div style="font-size: 14px; display: inline-block;">
+                                                    [[person.name]]
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div v-if='designList.length !== 0'>
-                                    <div
-                                        style="font-size: 18px; margin-bottom: .75rem; left: 2.08%; position: relative; color: #666666">
-                                        设计:
-                                    </div>
-                                    <div class="row justify-content-start col-10" style="left: 4.16%;">
-                                        <div v-for='person in designList'
-                                            :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]" data-modal="modal-5"
-                                            @click="show_deatils(person.id)"
-                                            style="margin: .75rem 2rem .75rem 0rem; margin-right: 1.5rem; width: 85px"
-                                            :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
-                                            <img :src="'/file/avatar/?user_id=' + person.id"
-                                                style="height: 30px; border-radius: 15px">
-                                            <div style="font-size: 14px; display: inline-block;">
-                                                [[person.name]]
+                                        </td>
+                                    </tr>
+                                    <tr v-if='mtList.length !== 0'>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <th colspan="2" style="font-size: 16px">机电</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr v-if='mtList.length !== 0'>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td>
+                                            <div v-for='person in mtList'
+                                                :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"
+                                                data-modal="modal-5" @click="show_deatils(person.id)"
+                                                style="margin: .75rem 2rem .75rem 0rem; margin-right: 1.5rem; width: 85px; display: inline-block"
+                                                :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
+                                                <img :src="'/file/avatar/?user_id=' + person.id"
+                                                    style="height: 30px; border-radius: 15px">
+                                                <div style="font-size: 14px; display: inline-block;">
+                                                    [[person.name]]
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div v-if='frontList.length !== 0'>
-                                    <div
-                                        style="font-size: 18px; margin-bottom: .75rem; left: 2.08%; position: relative; color: #666666">
-                                        前端:
-                                    </div>
-                                    <div class="row justify-content-start col-10" style="left: 4.16%;">
-                                        <div v-for='person in frontList' :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"
-                                            data-modal="modal-5" @click="show_deatils(person.id)"
-                                            style="margin: .75rem 2rem .75rem 0rem; margin-right: 1.5rem; width: 85px"
-                                            :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
-                                            <img :src="'/file/avatar/?user_id=' + person.id"
-                                                style="height: 30px; border-radius: 15px">
-                                            <div style="font-size: 14px; display: inline-block;">
-                                                [[person.name]]
+                                        </td>
+                                    </tr>
+                                    <tr v-if='frontList.length !== 0'>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <th colspan="2" style="font-size: 16px">前端</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr v-if='frontList.length !== 0'>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td>
+                                            <div v-for='person in frontList'
+                                                :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"
+                                                data-modal="modal-5" @click="show_deatils(person.id)"
+                                                style="margin: .75rem 2rem .75rem 0rem; margin-right: 1.5rem; width: 85px; display: inline-block"
+                                                :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
+                                                <img :src="'/file/avatar/?user_id=' + person.id"
+                                                    style="height: 30px; border-radius: 15px">
+                                                <div style="font-size: 14px; display: inline-block;">
+                                                    [[person.name]]
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div v-if='mtList.length !== 0'>
-                                    <div
-                                        style="font-size: 18px; margin-bottom: .75rem; left: 2.08%; position: relative; color: #666666">
-                                        机电:
-                                    </div>
-                                    <div class="row justify-content-start col-10" style="left: 4.16%;">
-                                        <div v-for='person in mtList' :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"
-                                            data-modal="modal-5" @click="show_deatils(person.id)"
-                                            style="margin: .75rem 2rem .75rem 0rem; margin-right: 1.5rem; width: 85px"
-                                            :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
-                                            <img :src="'/file/avatar/?user_id=' + person.id"
-                                                style="height: 30px; border-radius: 15px">
-                                            <div style="font-size: 14px; display: inline-block;">
-                                                [[person.name]]
+                                        </td>
+                                    </tr>
+                                    <tr v-if='designList.length !== 0'>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <th colspan="2" style="font-size: 16px">设计</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr v-if='designList.length !== 0'>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td style="width: .6rem; padding: 0px"></td>
+                                        <td>
+                                            <div v-for='person in designList'
+                                                :class="[{'md-trigger': user_id == person.id || is_creator || is_leader}]"
+                                                data-modal="modal-5" @click="show_deatils(person.id)"
+                                                style="margin: .75rem 2rem .75rem 0rem; margin-right: 1.5rem; width: 85px; display: inline-block"
+                                                :style="{cursor: user_id == person.id || is_creator || is_leader? 'pointer' : false}">
+                                                <img :src="'/file/avatar/?user_id=' + person.id"
+                                                    style="height: 30px; border-radius: 15px">
+                                                <div style="font-size: 14px; display: inline-block;">
+                                                    [[person.name]]
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -467,10 +507,12 @@
                                             </div>
                                         </div>
                                         <input type="button" :value="isActive? '保存' : '添加'"
-                                            class="btn btn-outline-primary" style="float:right; margin-left: 1.5rem" :style="{visibility: add_button && this.user_id == this.person_id? 'visible' : 'hidden'}"
+                                            class="btn btn-outline-primary" style="float:right; margin-left: 1.5rem"
+                                            :style="{visibility: add_button && this.user_id == this.person_id? 'visible' : 'hidden'}"
                                             @click="add_personal_process()">
                                         <input type="button" :value="isActive? '保存' : '编辑'"
-                                            class="btn btn-outline-primary" style="float:right" :style="{visibility: edit_button && personalProcess.length && this.user_id == this.person_id? 'visible' : 'hidden'}"
+                                            class="btn btn-outline-primary" style="float:right"
+                                            :style="{visibility: edit_button && personalProcess.length && this.user_id == this.person_id? 'visible' : 'hidden'}"
                                             @click="edit_personal_process()">
                                     </div>
                                     <div class="tab-pane fade" id="v-pills-schedule" role="tabpanel"
@@ -487,10 +529,12 @@
                                             </div>
                                         </div>
                                         <input type="button" :value="isActive? '保存' : '添加'"
-                                            class="btn btn-outline-primary" style="float:right; margin-left: 1.5rem" :style="{visibility: add_button && this.user_id == this.person_id? 'visible' : 'hidden'}"
+                                            class="btn btn-outline-primary" style="float:right; margin-left: 1.5rem"
+                                            :style="{visibility: add_button && this.user_id == this.person_id? 'visible' : 'hidden'}"
                                             @click="add_personal_schedule()">
                                         <input type="button" :value="isActive? '保存' : '编辑'"
-                                            class="btn btn-outline-primary" style="float:right" :style="{visibility: edit_button && personalSchedule.length && this.user_id == this.person_id? 'visible' : 'hidden'}"
+                                            class="btn btn-outline-primary" style="float:right"
+                                            :style="{visibility: edit_button && personalSchedule.length && this.user_id == this.person_id? 'visible' : 'hidden'}"
                                             @click="edit_personal_schedule()">
                                     </div>
                                     <div class="tab-pane fade" id="v-pills-comment" role="tabpanel"
@@ -507,10 +551,12 @@
                                             </div>
                                         </div>
                                         <input type="button" :value="isActive? '保存' : '添加'"
-                                            class="btn btn-outline-primary" style="float:right; margin-left: 1.5rem" :style="{visibility: add_button && is_leader? 'visible' : 'hidden'}"
+                                            class="btn btn-outline-primary" style="float:right; margin-left: 1.5rem"
+                                            :style="{visibility: add_button && is_leader? 'visible' : 'hidden'}"
                                             @click="add_personal_comments()">
                                         <input type="button" :value="isActive? '保存' : '编辑'"
-                                            class="btn btn-outline-primary" style="float:right" :style="{visibility: edit_button && personalComments.length && is_leader? 'visible' : 'hidden'}"
+                                            class="btn btn-outline-primary" style="float:right"
+                                            :style="{visibility: edit_button && personalComments.length && is_leader? 'visible' : 'hidden'}"
                                             @click="edit_personal_comments()">
                                     </div>
                                 </div>
@@ -527,7 +573,8 @@
                                 <div class="col-4" style="margin-top: .5rem; font-size: 24px">
                                     添加附件
                                 </div>
-                                <span class="col-2 md-close" style="margin-top: .5rem; cursor: pointer;" @click="hide_modal()">
+                                <span class="col-2 md-close" style="margin-top: .5rem; cursor: pointer;"
+                                    @click="hide_modal()">
                                     <img src="/static/pic/close.png"
                                         style="position: relative; top: 50%; transform: translateY(-50%); float: right">
                                 </span>
@@ -704,8 +751,8 @@
                 mounted() {
                     this.is_creator = this.user_id == this.creator;
 
-                    for (each of this.leaders){
-                        if (each['id'] == this.user_id){
+                    for (each of this.leaders) {
+                        if (each['id'] == this.user_id) {
                             this.is_leader = true;
                             break;
                         }
@@ -715,7 +762,7 @@
                     this.progress = 100 - parseInt((new Date(this.deadline).getTime() - this.date.getTime()) / (new Date(this.deadline).getTime() - new Date(this.publish_date).getTime()) * 100) + '%';
                 },
                 methods: {
-                    hide_modal: function(){
+                    hide_modal: function () {
                         this.edit_button = true;
                         this.add_button = true;
                         this.isActive = false;
@@ -820,7 +867,7 @@
                         this.clean_personal_achieve();
                         this.person_id = personId;
                         this.$http.get('/publisher/personal_process/' + this.task_id + '/' + this.person_id + '/').then(result => {
-                        this.personalProcess = result.body;
+                            this.personalProcess = result.body;
                         })
                     },
                     edit_task_schedule: function () {
