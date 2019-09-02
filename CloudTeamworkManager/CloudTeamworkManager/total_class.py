@@ -328,7 +328,14 @@ class task(object):
         return JsonResponse({"tip": "表单验证失败", "status": 400}, safe=False)
 
     def edit_page(self, request):
-        return render(request, "edit_task.html", {"task_id": self.task.id, "task_name": self.task.task_name, "deadline": self.task.deadline, "task_status": self.task.task_status, "members": self.task.members, "leaders": self.task.leaders, "task_description": self.task.task_description})
+        target_task = model_to_dict(self.task, fields=["id", "task_name", "deadline", "task_status", "members", "creator", "leaders", "task_description", "task_progress", "task_schedule", "task_comment", "appendixes"])
+        members = json.loads(target_task["members"])
+        leaders = json.loads(target_task["leaders"])
+
+        target_task["members"] = json.dumps([{**{"id": each}, **model_to_dict(UserProfile.objects.get(user_id = each), fields=['name', 'major'])} for each in members])
+        target_task["leaders"] = json.dumps([{**{"id": each}, **model_to_dict(UserProfile.objects.get(user_id = each), fields=['name', 'major'])} for each in leaders])
+
+        return render(request, "edit_task.html", target_task)
 
     def edit_task(self, request):
         form = forms_task(request.POST, instance = self.task)

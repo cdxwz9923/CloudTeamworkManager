@@ -370,52 +370,52 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="row" style="height: 19rem;">
-                                <div v-if="!load" class="row no-gutters"
-                                    style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);text-align: center">
-                                    <div class="row col-10 offset-1">
-                                        <label for="file" class="btn btn-primary col-6 offset-3"
-                                            style="cursor: pointer">点击选择</label>
-                                        <input type="file" name="appendix" id="file" style="height: 0px; opacity: 0"
-                                            v-on:change="append_appendix($event)">
-                                        <small class="col-6 offset-3"
-                                            style="color: red;float:left; padding: 0px; text-align: left">文件不要超过10M！</small>
-                                    </div>
-                                </div>
-                                <div v-if="load" class="col-12"
-                                    style="overflow-y: auto; margin: 10px 0px">
-                                    <table class="table" style="height: 18rem; overflow-y: auto; word-break: keep-all">
-                                        <tbody>
-                                            <tr v-for="(each, index) in appendix">
-                                                <th>
-                                                    <img :src="each.name | getLogoSrc">
-                                                </th>
-                                                <td>
-                                                    <div>
-                                                        [[each.name]]
-                                                    </div>
-                                                    <div style="margin-top: 1.2rem">
-                                                        [[each.size]]字节
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button
-                                                            style="background: url(/static/pic/826.png); width:24px; height:24px; border:none; float: right"
-                                                            @click="del_appendix(index)">
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div v-if="load">
-                                    <label for="file" class="btn btn-primary col-3" style="cursor: pointer">点击选择</label>
+                            <div v-if="!load" class="row no-gutters"
+                                style="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);text-align: center">
+                                <div class="row col-10 offset-1">
+                                    <label for="file" class="btn btn-primary col-6 offset-3"
+                                        style="cursor: pointer">点击选择</label>
                                     <input type="file" name="appendix" id="file" style="height: 0px; opacity: 0"
                                         v-on:change="append_appendix($event)">
-                                    <div style="color: red; vertical-align: bottom; font-size: 80%; font-weight: 400">
-                                        文件不要超过10M！</div>
+                                    <small class="col-6 offset-3"
+                                        style="color: red;float:left; padding: 0px; text-align: left">文件不要超过10M！
+                                    </small>
+                                </div>
+                            </div>
+                            <div v-if="load" class="col-12"
+                                style="height: 19rem; overflow-y: auto; margin: 10px 0px">
+                                <table class="table" style="height: 18rem; overflow-y: auto; word-break: keep-all">
+                                    <tbody>
+                                        <tr v-for="(each, index) in appendix">
+                                            <th>
+                                                <img :src="each.name | getLogoSrc">
+                                            </th>
+                                            <td>
+                                                <div>
+                                                    [[each.name]]
+                                                </div>
+                                                <div style="margin-top: 1.2rem">
+                                                    [[each.size]]字节
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <button
+                                                        style="background: url(/static/pic/826.png); width:24px; height:24px; border:none; float: right"
+                                                        @click="del_appendix(index)">
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div v-if="load">
+                                <label for="file" class="btn btn-primary col-3" style="cursor: pointer">点击选择</label>
+                                <input type="file" name="appendix" id="file" style="height: 0px; opacity: 0"
+                                    v-on:change="append_appendix($event)">
+                                <div style="color: red; vertical-align: bottom; font-size: 80%; font-weight: 400">
+                                    文件不要超过10M！
                                 </div>
                             </div>
                         </div>

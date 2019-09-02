@@ -35,8 +35,12 @@ def avatar(request):
         return HttpResponse(status="403")
 
     if request.method == "GET":
-        if os.path.exists("static/avatar/"+str(request.user.id)+'.jpg'):
-            ava = open(os.path.join("static/avatar/"+str(request.user.id)+'.jpg'), 'rb')
+        user_id = str(request.GET.get('user_id'))
+        if not user_id:
+            user_id = str(request.user.id)
+
+        if os.path.exists("static/avatar/"+user_id+'.jpg'):
+            ava = open(os.path.join("static/avatar/"+user_id+'.jpg'), 'rb')
             return HttpResponse(ava.read(), "image/jpg")
         else:
             ava = open(os.path.join("static/avatar/default_avatar.png"), 'rb')
@@ -83,7 +87,7 @@ def appendix(request, task_id, file_name):
         assign_perm('file.edit_appendix', request.user, file)
         assign_perm('file.delete_appendix', request.user, file)
 
-        return JsonResponse({"tip": "操作成功", "status": 200}, safe=False)
+        return JsonResponse({"tip": "操作成功", "id": file.id, "status": 200}, safe=False)
 
     if request.method == 'GET':
         file = open("./file/appendixes/%s/%s" % (task_id, file_name), 'rb')
