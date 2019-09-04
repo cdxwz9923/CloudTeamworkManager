@@ -4,7 +4,6 @@ import json
 from django.shortcuts import HttpResponse, render_to_response, render
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
-from .verification_code import Code
 from django.contrib.auth import logout
 from PIL import Image, ImageFilter
 from io import BytesIO
@@ -15,14 +14,13 @@ from django.http import FileResponse
 from task.models import task
 from file.models import appendix as _appendix
 from django.db import transaction
+from .picode import Captcha
 
 
-def verify_code(request):
-    code = Code(4)
-    string, code = code.make_code()
-    request.session['verify'] = string
-    print(request.session['verify'])
-    return HttpResponse(code.getvalue(), 'image/png')
+def picode_code(request):
+    img, code = Captcha.instance().generate()
+    request.session['verify'] = code
+    return HttpResponse(img, 'image/png')
 
 
 def show_image(request, file_name):
@@ -35,8 +33,12 @@ def avatar(request):
         return HttpResponse(status="403")
 
     if request.method == "GET":
-        if os.path.exists("static/avatar/"+str(request.user.id)+'.jpg'):
-            ava = open(os.path.join("static/avatar/"+str(request.user.id)+'.jpg'), 'rb')
+        user_id = str(request.GET.get('user_id'))
+        if not user_id:
+            user_id = str(request.user.id)
+
+        if os.path.exists("static/avatar/"+user_id+'.jpg'):
+            ava = open(os.path.join("static/avatar/"+user_id+'.jpg'), 'rb')
             return HttpResponse(ava.read(), "image/jpg")
         else:
             ava = open(os.path.join("static/avatar/default_avatar.png"), 'rb')
@@ -83,7 +85,7 @@ def appendix(request, task_id, file_name):
         assign_perm('file.edit_appendix', request.user, file)
         assign_perm('file.delete_appendix', request.user, file)
 
-        return JsonResponse({"tip": "操作成功", "status": 200}, safe=False)
+        return JsonResponse({"tip": "操作成功", "id": file.id, "status": 200}, safe=False)
 
     if request.method == 'GET':
         file = open("./file/appendixes/%s/%s" % (task_id, file_name), 'rb')

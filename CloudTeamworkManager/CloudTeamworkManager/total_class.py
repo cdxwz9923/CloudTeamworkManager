@@ -288,9 +288,10 @@ class task(object):
             assign_perm('task.delete_appendix', target_group_leader, target_task)
 
             # 配置创建者权限
-            target_member = member(user_buildin = request.user, target_task = target_task, target_group = target_group, target_group_leader = target_group_leader)
+            target_member = member(user_buildin = request.user, user_profile = UserProfile.objects.get(user_id = request.user.id), target_task = target_task, target_group = target_group, target_group_leader = target_group_leader)
             target_member.assign_member_perm()
             target_member.assign_creater_perm()
+            target_member.join_task_in_profile()
 
             # 配置组员相关
             for each in json.loads(form.instance.members):
@@ -328,7 +329,14 @@ class task(object):
         return JsonResponse({"tip": "表单验证失败", "status": 400}, safe=False)
 
     def edit_page(self, request):
-        return render(request, "edit_task.html", {"task_id": self.task.id, "task_name": self.task.task_name, "deadline": self.task.deadline, "task_status": self.task.task_status, "members": self.task.members, "leaders": self.task.leaders, "task_description": self.task.task_description})
+        target_task = model_to_dict(self.task, fields=["id", "task_name", "deadline", "task_status", "members", "creator", "leaders", "task_description", "task_progress", "task_schedule", "task_comment", "appendixes"])
+        members = json.loads(target_task["members"])
+        leaders = json.loads(target_task["leaders"])
+
+        target_task["members"] = json.dumps([{**{"id": each}, **model_to_dict(UserProfile.objects.get(user_id = each), fields=['name', 'major'])} for each in members])
+        target_task["leaders"] = json.dumps([{**{"id": each}, **model_to_dict(UserProfile.objects.get(user_id = each), fields=['name', 'major'])} for each in leaders])
+
+        return render(request, "edit_task.html", target_task)
 
     def edit_task(self, request):
         form = forms_task(request.POST, instance = self.task)
@@ -445,6 +453,10 @@ class task(object):
         try:
             target_member.user_buildin = request.user
             target_member.user_profile = UserProfile.objects.get(user_id = request.user.id)
+
+            target_member.remove_creater_perm()
+            target_member.remove_member_perm()
+            target_member.quit_task_in_profile()
         except UserProfile.DoesNotExist:
             pass
 

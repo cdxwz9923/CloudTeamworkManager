@@ -4,7 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^picode/.*$', views.verify_code),
+    url(r'^picode/.*$', views.picode_code),
     path('image/<str:file_name>/', views.show_image),
     path('avatar/', views.avatar),
     path('appendix/<int:task_id>/<str:file_name>/', views.appendix),
