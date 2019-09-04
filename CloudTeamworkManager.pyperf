@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ProfilingTarget xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectTarget>
+    <TargetProject>e96ac0f6-2ff0-44c1-9705-81d9336c1a31</TargetProject>
+    <FriendlyName>CloudTeamworkManager</FriendlyName>
+  </ProjectTarget>
+  <UseVTune>false</UseVTune>
+</ProfilingTarget>

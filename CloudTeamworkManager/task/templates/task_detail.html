@@ -191,7 +191,7 @@
                             </div>
                         </div>
                         <div class="row no-gutters">
-                            <table class="table col-10 offset-1 " style="margin-bottom: 3rem; max-width: 100%">
+                            <table class="table col-10 offset-1 " style="margin-bottom: 3rem;">
                                 <tbody>
                                     <tr>
                                         <th>截止时间</th>
@@ -314,7 +314,7 @@
                             </table>
                         </div>
                         <div class="row no-gutters">
-                            <table class="table col-10 offset-1 " style="margin-bottom: 3rem; max-width: 100%">
+                            <table class="table col-10 offset-1 " style="margin-bottom: 3rem;">
                                 <tbody>
                                     <tr>
                                         <th colspan="3">小组成员</th>
@@ -759,7 +759,7 @@
                     }
 
                     this.classify();
-                    this.progress = 100 - parseInt((new Date(this.deadline).getTime() - this.date.getTime()) / (new Date(this.deadline).getTime() - new Date(this.publish_date).getTime()) * 100) + '%';
+                    this.progress = new Date(this.deadline).getTime() - this.date.getTime() > 0 ? 100 - parseInt((new Date(this.deadline).getTime() - this.date.getTime()) / (new Date(this.deadline).getTime() - new Date(this.publish_date).getTime()) * 100) + '%' : '100%';
                 },
                 methods: {
                     hide_modal: function () {

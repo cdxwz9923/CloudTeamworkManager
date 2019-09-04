@@ -288,9 +288,10 @@ class task(object):
             assign_perm('task.delete_appendix', target_group_leader, target_task)
 
             # 配置创建者权限
-            target_member = member(user_buildin = request.user, target_task = target_task, target_group = target_group, target_group_leader = target_group_leader)
+            target_member = member(user_buildin = request.user, user_profile = UserProfile.objects.get(user_id = request.user.id), target_task = target_task, target_group = target_group, target_group_leader = target_group_leader)
             target_member.assign_member_perm()
             target_member.assign_creater_perm()
+            target_member.join_task_in_profile()
 
             # 配置组员相关
             for each in json.loads(form.instance.members):
@@ -452,6 +453,10 @@ class task(object):
         try:
             target_member.user_buildin = request.user
             target_member.user_profile = UserProfile.objects.get(user_id = request.user.id)
+
+            target_member.remove_creater_perm()
+            target_member.remove_member_perm()
+            target_member.quit_task_in_profile()
         except UserProfile.DoesNotExist:
             pass
 

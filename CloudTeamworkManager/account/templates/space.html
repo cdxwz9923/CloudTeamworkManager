@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
     <title>个人资料</title>
     <style>
+        @font-face {
+            font-family: 'SourceHanSansCN-Normal';
+            src: url('/static/font/SourceHanSansCN-Normal.otf');
+        }
+
+        body {
+            font-family: 'SourceHanSansCN-Normal';
+        }
+
         li {
             line-height: 3rem;
             vertical-align: middle;
@@ -16,7 +25,16 @@
         .table td,
         .table th {
             border-top: 0px;
-            vertical-align: middle;
+            font-size: 18px;
+            color: #666666;
+            font-weight: initial;
+            vertical-align: top;
+            width: 7em;
+            letter-spacing: 4px;
+        }
+
+        .table td>input {
+            color: #666666;
         }
 
         .card {
@@ -39,6 +57,7 @@
         }
 
         textarea[readonly] {
+            color: #666666;
             border: 1px rgba(255, 255, 255, 0) solid !important;
         }
 
@@ -60,6 +79,7 @@
         }
 
         textarea {
+            color: #666666;
             border: 1px #ced4da solid;
             width: 100%;
         }
@@ -160,10 +180,11 @@
                     <div class="clearfix" style="width: 100%">
                         <div style="float: right; height: 6rem; width: 22rem">
                             <div class="text-uppercase lead font-weight-bold"
-                                style="font-size: 4rem; color: rgba(41, 98, 255, 0.05); z-index: -1">
-                                about&nbsp;me</div>
+                                style="font-size: 60px; color: rgba(41, 98, 255, 0.05); z-index: -1">
+                                about&nbsp;me
+                            </div>
                             <div
-                                style="font-size: 2rem; color: #999999; position: relative; top: -65%; left: 8%; z-index: 1;">
+                                style="letter-spacing: 4px; font-size: 30px; color: #999999; position: relative; top: -65%; left: 8%; z-index: 1;">
                                 基本资料
                             </div>
                         </div>
@@ -176,10 +197,10 @@
                             </label>
                             <input type="file" name="avatar" accept=".jpg" @change="upload_avatar" id="file"
                                 style="height: 0px; opacity: 0;">
-                            <div style="font-size: 1.8rem; margin: 0rem 0rem 3.0rem 0rem">[[name]]</div>
+                            <div style="font-size: 30px; margin: 0rem 0rem 3.0rem 0rem; color: #333333">[[name]]</div>
                         </div>
                         <div class="col-3 offset-1">
-                            <ul class="list-unstyled" style="font-size: 1.5rem">
+                            <ul class="list-unstyled" style="font-size: 18px; color: #666666">
                                 <li>[[phone_number]]</li>
                                 <li>[[sex | sexFormat]]</li>
                                 <li>[[birthday]]</li>
@@ -193,10 +214,11 @@
                     <div class="clearfix" style="width: 100%">
                         <div style="float: right; height: 6rem; width: 22rem">
                             <div class="text-uppercase lead font-weight-bold"
-                                style="font-size: 4rem; color: rgba(41, 98, 255, 0.05); z-index: -1">
-                                about&nbsp;me</div>
+                                style="font-size: 60px; color: rgba(41, 98, 255, 0.05); z-index: -1">
+                                about&nbsp;me
+                            </div>
                             <div
-                                style="font-size: 2rem; color: #999999; position: relative; top: -65%; left: 8%; z-index: 1;">
+                                style="letter-spacing: 4px; font-size: 30px; color: #999999; position: relative; top: -65%; left: 8%; z-index: 1;">
                                 详细资料
                             </div>
                         </div>
@@ -207,8 +229,7 @@
                             <tbody>
                                 <tr>
                                     <th scope="row" style="width: 20%">邮箱</th>
-                                    <td><input v-model="email" :readonly="edit_status? false : 'readonly'"
-                                            value="ssdyny@foxmail.com">
+                                    <td><input v-model="email" :readonly="edit_status? false : 'readonly'">
                                     </td>
                                 </tr>
                                 <tr>
@@ -221,18 +242,17 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">宿舍</th>
-                                    <td><input v-model="room" :readonly="edit_status? false : 'readonly'" value="2#227">
+                                    <td><input v-model="room" :readonly="edit_status? false : 'readonly'">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">家庭住址</th>
-                                    <td><input v-model="home_address" :readonly="edit_status? false : 'readonly'"
-                                            value="山西省 晋中市 榆次区 乌金山镇 太原理工大学"></td>
+                                    <td><input v-model="home_address" :readonly="edit_status? false : 'readonly'"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">监护人电话</th>
-                                    <td><input v-model="guardian_phone" :readonly="edit_status? false : 'readonly'"
-                                            value="15698311360"></td>
+                                    <td><input v-model="guardian_phone" :readonly="edit_status? false : 'readonly'">
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">个人介绍</th>
@@ -245,7 +265,7 @@
                             </tbody>
                         </table>
                         <button @click="edit_info" class="edit-icon btn btn-primary" type="button"
-                            style="font-size: 0.9rem; padding: 0px; opacity: 0.3; width: 3rem; height: 1.5rem; position: absolute; left: 93%; bottom: 3%;">
+                            style="font-size: 0.9rem; padding: 0px; opacity: 0.3; width: 3rem; height: 1.5rem; position: absolute; left: 93%; bottom: 3%; border-radius: 0px">
                             [[ edit_or_save ]]
                         </button>
                     </div>

@@ -4,7 +4,6 @@ import json
 from django.shortcuts import HttpResponse, render_to_response, render
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
-from .verification_code import Code
 from django.contrib.auth import logout
 from PIL import Image, ImageFilter
 from io import BytesIO
@@ -15,14 +14,13 @@ from django.http import FileResponse
 from task.models import task
 from file.models import appendix as _appendix
 from django.db import transaction
+from .picode import Captcha
 
 
-def verify_code(request):
-    code = Code(4)
-    string, code = code.make_code()
-    request.session['verify'] = string
-    print(request.session['verify'])
-    return HttpResponse(code.getvalue(), 'image/png')
+def picode_code(request):
+    img, code = Captcha.instance().generate()
+    request.session['verify'] = code
+    return HttpResponse(img, 'image/png')
 
 
 def show_image(request, file_name):

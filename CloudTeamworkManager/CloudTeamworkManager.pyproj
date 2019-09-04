@@ -49,9 +49,9 @@
     <Compile Include="file\apps.py" />
     <Compile Include="file\migrations\__init__.py" />
     <Compile Include="file\models.py" />
+    <Compile Include="file\picode.py" />
     <Compile Include="file\tests.py" />
     <Compile Include="file\urls.py" />
-    <Compile Include="file\verification_code.py" />
     <Compile Include="file\views.py" />
     <Compile Include="file\__init__.py" />
     <Compile Include="manage.py" />

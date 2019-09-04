@@ -178,8 +178,10 @@ def change_info(request):
 def task_list(request):
     user = UserProfile.objects.get(user_id = request.user.id)
     _task_list = json.loads(user.involved_projects)
-    temp = [task.objects.filter(id = each).values("id", "task_name", "members", "task_status")[0] for each in _task_list]
+    temp = [task.objects.filter(id = each).values("id", "task_name", "members", "task_status", "creator")[0] for each in _task_list]
     for each_task in temp:
         members = json.loads(each_task["members"])
         each_task["members"] = [UserProfile.objects.get(user_id = each).name for each in members]
+        each_task["is_creator"] = (int)(request.user.id == each_task['creator'])
+        each_task.pop('creator')
     return render(request, "task_list.html", {"content": temp, "name": user.name})
